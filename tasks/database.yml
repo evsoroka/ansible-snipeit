@@ -1,0 +1,17 @@
+#Create SnipeIT database
+- name: Create database
+  mysql_db:
+    name: "{{ snipeit_db }}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    state: present
+
+#Create user
+- name: Create database user
+  mysql_user:
+    name: "{{ snipeit_db_user }}"
+    password: "{{ snipeit_db_password }}"
+    priv: '{{ snipeit_db }}.*:ALL,GRANT'
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    state: present

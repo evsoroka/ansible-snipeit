@@ -1,0 +1,17 @@
+---
+# vars file for ansible-snipeit
+#MySQL
+db_version: 5.7
+mysql_root_password: 87!fgTerDFrer23d
+snipeit_db: snipeit_site
+snipeit_db_user: snipeit_site
+snipeit_db_password: uy56!df%3fgbRT
+
+#Composer
+composer_home_path: '/home/www-data/.composer'
+composer_home_owner: www-data
+composer_home_group: www-data
+
+#SnipeIt
+snipeit_install_dir: /var/www/snipeit
+app_url: https://www.example.com

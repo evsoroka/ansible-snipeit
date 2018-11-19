@@ -1,0 +1,48 @@
+- name: Clone the latest SnipeIT release
+  git:
+    repo: https://github.com/snipe/snipe-it
+    dest: "{{ snipeit_install_dir }}"
+
+- name: Change owner
+  file:
+    path: "{{ snipeit_install_dir }}"
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+- name: Copy configuration file
+  template:
+   src: "env.j2"
+   dest: "{{ snipeit_install_dir }}/.env"
+   owner: www-data
+   group: www-data
+   backup: yes
+
+- name: Chmod directories
+  file:
+    path: '{{ snipeit_install_dir }}/{{ item }}'
+    recurse: yes
+    mode: 755
+  with_items:
+    - storage
+    - public/uploads
+
+- name: Install dependencies
+  shell: "composer install --no-dev --prefer-source"
+  become: yes
+  become_user: www-data
+  args:
+    chdir: "{{ snipeit_install_dir }}"
+
+- name: Install pexpect module
+  apt:
+    name: python-pexpect
+    state: present
+
+- name: Generate APP key
+  expect:
+    command: "php {{ snipeit_install_dir }}/artisan key:generate"
+    responses:
+        (?i)yes: "yes"
+  register: command_result
+  failed_when: "'FAILED' in command_result.stdout"

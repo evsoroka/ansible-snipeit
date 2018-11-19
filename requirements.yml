@@ -1,0 +1,6 @@
+# from GitHub
+- src: https://github.com/evsoroka/ansible-percona-server
+- src: https://github.com/geerlingguy/ansible-role-nginx
+- src: https://github.com/geerlingguy/ansible-role-php
+- src: https://github.com/geerlingguy/ansible-role-git
+- src: https://github.com/geerlingguy/ansible-role-composer
